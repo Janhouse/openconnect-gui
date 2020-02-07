@@ -37,10 +37,17 @@ static int last_form_empty;
 static void stats_vfn(void* privdata, const struct oc_stats* stats)
 {
     VpnInfo* vpn = static_cast<VpnInfo*>(privdata);
-    const char* cipher;
+    const char* cipher = nullptr;
     QString dtls;
 
-    cipher = openconnect_get_dtls_cipher(vpn->vpninfo);
+    /* GlobalProtect and Pulse use ESP, which does not initialize the GNUTLS
+     * session, so any attempt at using openconnect_get_dtls_cipher will fail.
+     * Work around this by not outputting anything until openconnect has been
+     * updated to handle getting DTLS cipher information for ESP connections.
+     */
+    if (vpn->ss->get_protocol_id() < 2)
+        cipher = openconnect_get_dtls_cipher(vpn->vpninfo);
+
     if (cipher != nullptr) {
         dtls = QLatin1String(cipher);
     }
