@@ -43,10 +43,11 @@ QVariant VpnProtocolModel::data(const QModelIndex& index, int role) const
 void VpnProtocolModel::loadProtocols()
 {
     struct oc_vpn_proto* protos = nullptr;
+    int rc;
 
-    if (openconnect_get_supported_protocols(&protos) >= 0) {
-        for (oc_vpn_proto* p = protos; p->name; ++p) {
-            m_protocols.append({ p->name, p->pretty_name, p->description });
+    if ((rc = openconnect_get_supported_protocols(&protos)) >= 0) {
+        for (int i = 0; i != rc; ++i) {
+            m_protocols.append({ protos[i].name, protos[i].pretty_name, protos[i].description });
         }
         openconnect_free_supported_protocols(protos);
     }
