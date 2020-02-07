@@ -41,9 +41,11 @@ private slots:
     void on_buttonBox_rejected();
     void on_userCertButton_clicked();
     void on_userKeyButton_clicked();
+    void on_csdWrapperButton_clicked();
     void on_caCertButton_clicked();
     void on_userCertClear_clicked();
     void on_userKeyClear_clicked();
+    void on_csdWrapperClear_clicked();
     void on_caCertClear_clicked();
     void on_serverCertClear_clicked();
     void on_tokenClear_clicked();
@@ -51,6 +53,7 @@ private slots:
     void on_loadWinCert_clicked();
 
     void on_groupnameEdit_textChanged(const QString& arg1);
+    void on_csdWrapperEdit_textChanged(const QString& arg1);
     void on_caCertEdit_textChanged(const QString& arg1);
     void on_serverCertHash_textChanged(const QString& arg1);
     void on_tokenEdit_textChanged(const QString& arg1);

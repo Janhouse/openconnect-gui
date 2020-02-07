@@ -44,6 +44,9 @@ public:
     const QString& get_label() const;
     void set_label(const QString& label);
 
+    const QString& get_csd_wrapper() const;
+    void set_csd_wrapper(const QString& csd_wrapper);
+
     bool get_disable_udp() const;
     void set_disable_udp(bool v);
 
@@ -58,6 +61,7 @@ public:
     void clear_password();
     void clear_groupname();
     void clear_server_hash();
+    void clear_csd_wrapper();
 
     QString get_client_cert_hash();
     int set_client_cert(const QString& filename);
@@ -117,6 +121,7 @@ private:
     QString m_servername;
     QString m_token_string;
     QString m_label;
+    QString m_csd_wrapper;
     int m_token_type;
     int m_protocol_id;
     QString m_protocol_name;

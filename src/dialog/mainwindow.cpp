@@ -678,6 +678,10 @@ void MainWindow::on_connectClicked()
         goto fail;
     }
 
+    if (!ss->get_csd_wrapper().isEmpty()) {
+        openconnect_setup_csd(vpninfo->vpninfo, 0, 0, ss->get_csd_wrapper().toLatin1().data());
+    }
+
     if (ss->get_proxy()) {
         proxies = QNetworkProxyFactory::systemProxyForQuery(query);
         if (proxies.size() > 0 && proxies.at(0).type() != QNetworkProxy::NoProxy) {

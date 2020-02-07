@@ -138,6 +138,7 @@ EditDialog::EditDialog(QString server, QWidget* parent)
     }
     ui->groupnameEdit->setText(ss->get_groupname());
     ui->usernameEdit->setText(ss->get_username());
+    ui->csdWrapperEdit->setText(ss->get_csd_wrapper());
     ui->gatewayEdit->setText(ss->get_servername());
     ui->userCertHash->setText(ss->get_client_cert_hash());
     ui->caCertHash->setText(ss->get_ca_cert_hash());
@@ -236,6 +237,7 @@ void EditDialog::on_buttonBox_accepted()
     }
     ss->set_label(ui->nameEdit->text());
     ss->set_username(ui->usernameEdit->text());
+    ss->set_csd_wrapper(ui->csdWrapperEdit->text());
     ss->set_servername(ui->gatewayEdit->text());
     ss->set_batch_mode(ui->batchModeBox->isChecked());
     ss->set_minimize(ui->minimizeBox->isChecked());
@@ -285,6 +287,15 @@ void EditDialog::on_userKeyButton_clicked()
     ui->userKeyEdit->setText(filename);
 }
 
+void EditDialog::on_csdWrapperButton_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+        tr("Open CSD Wrapper"), "", "");
+
+    // FIXME: check empty result
+    ui->csdWrapperEdit->setText(filename);
+}
+
 void EditDialog::on_caCertButton_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this,
@@ -306,6 +317,12 @@ void EditDialog::on_userKeyClear_clicked()
 {
     ss->clear_key();
     ui->userKeyEdit->clear();
+}
+
+void EditDialog::on_csdWrapperClear_clicked()
+{
+    ss->clear_csd_wrapper();
+    ui->csdWrapperEdit->clear();
 }
 
 void EditDialog::on_caCertClear_clicked()
@@ -357,6 +374,11 @@ void EditDialog::on_caCertEdit_textChanged(const QString& arg1)
 void EditDialog::on_serverCertHash_textChanged(const QString& arg1)
 {
     ui->serverCertClear->setEnabled(!arg1.isEmpty());
+}
+
+void EditDialog::on_csdWrapperEdit_textChanged(const QString& arg1)
+{
+    ui->csdWrapperClear->setEnabled(!arg1.isEmpty());
 }
 
 void EditDialog::on_tokenEdit_textChanged(const QString& arg1)

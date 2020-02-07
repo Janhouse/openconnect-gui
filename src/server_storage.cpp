@@ -73,6 +73,11 @@ void StoredServer::clear_server_hash()
     this->m_server_hash_algo = 0;
 }
 
+void StoredServer::clear_csd_wrapper()
+{
+	this->m_csd_wrapper.clear();
+}
+
 QString StoredServer::get_cert_file()
 {
     QString File;
@@ -158,6 +163,7 @@ int StoredServer::load(QString& name)
     }
 
     this->m_username = settings.value("username").toString();
+    this->m_csd_wrapper = settings.value("csd_wrapper").toString();
     this->m_batch_mode = settings.value("batch", false).toBool();
     this->m_proxy = settings.value("proxy", false).toBool();
     this->m_disable_udp = settings.value("disable-udp", false).toBool();
@@ -246,6 +252,8 @@ int StoredServer::save()
         settings.setValue("groupname", this->m_groupname);
     }
 
+    settings.setValue("csd_wrapper", this->m_csd_wrapper);
+
     QByteArray data;
     this->m_ca_cert.data_export(data);
     settings.setValue("ca-cert", data);
@@ -296,6 +304,11 @@ const QString& StoredServer::get_label() const
     return this->m_label;
 }
 
+const QString& StoredServer::get_csd_wrapper() const
+{
+	return this->m_csd_wrapper;
+}
+
 void StoredServer::set_username(const QString& username)
 {
     this->m_username = username;
@@ -319,6 +332,11 @@ void StoredServer::set_servername(const QString& servername)
 void StoredServer::set_label(const QString& label)
 {
     this->m_label = label;
+}
+
+void StoredServer::set_csd_wrapper(const QString& csd_wrapper)
+{
+    this->m_csd_wrapper = csd_wrapper;
 }
 
 void StoredServer::set_disable_udp(bool v)
