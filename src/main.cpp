@@ -148,7 +148,7 @@ int main(int argc, char* argv[])
     QtSingleApplication app(argc, argv);
     if (app.isRunning()) {
         QSettings settings;
-        if (settings.value(QLatin1Literal("Settings/singleInstanceMode"), true).toBool()) {
+        if (settings.value(QLatin1String("Settings/singleInstanceMode"), true).toBool()) {
             app.sendMessage("Wake up!");
             return 0;
         }
