@@ -31,7 +31,7 @@ if(MINGW)
 endif()
 add_subdirectory(src)
 
-install(FILES LICENSE.txt
+install(FILES
     DESTINATION .
     COMPONENT App
 )
