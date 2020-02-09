@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget* parent, const QString profileName)
     this->cmd_fd = INVALID_SOCKET;
 
     connect(ui->actionQuit, &QAction::triggered,
-        [=]() {
+        [this]() {
             if (m_disconnectAction->isEnabled()) {
                 connect(this, &MainWindow::readyToShutdown,
                     qApp, &QApplication::quit);
@@ -178,7 +178,7 @@ MainWindow::MainWindow(QWidget* parent, const QString profileName)
 
     machine->setInitialState(s1_noProfiles);
     machine->start();
-    connect(machine, &QStateMachine::started, [=]() {
+    connect(machine, &QStateMachine::started, [this, profileName]() {
         // LCA: find better way to load/fill combobox...
         this->reload_settings();
 
@@ -221,13 +221,13 @@ MainWindow::MainWindow(QWidget* parent, const QString profileName)
 
     QState* s112_minimizedWindow = new QState();
     m_appWindowStateMachine->addState(s112_minimizedWindow);
-    connect(s112_minimizedWindow, &QState::entered, [=]() {
+    connect(s112_minimizedWindow, &QState::entered, [this]() {
         showMinimized();
         if (ui->actionMinimizeToTheNotificationArea->isChecked()) {
             QTimer::singleShot(10, this, SLOT(hide()));
         }
     });
-    connect(s112_minimizedWindow, &QState::exited, [=]() {
+    connect(s112_minimizedWindow, &QState::exited, [this]() {
         this->showNormal();
         if (ui->actionMinimizeToTheNotificationArea->isChecked()) {
             show();
