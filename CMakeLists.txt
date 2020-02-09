@@ -6,7 +6,7 @@ if(APPLE)
     endif()
 endif()
 
-project(openconnect-gui
+project(OpenConnect-GUI
     VERSION 1.5.3
     LANGUAGES CXX
 )
