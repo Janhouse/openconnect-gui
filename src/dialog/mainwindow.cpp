@@ -68,6 +68,10 @@ MainWindow::MainWindow(QWidget* parent, const QString profileName)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Window |
+                         Qt::CustomizeWindowHint |
+                         Qt::WindowCloseButtonHint |
+                         Qt::WindowMinimizeButtonHint);
 
     connect(ui->viewLogButton, &QPushButton::clicked,
         this, &MainWindow::createLogDialog);
