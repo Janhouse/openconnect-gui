@@ -55,9 +55,8 @@ static void stats_vfn(void* privdata, const struct oc_stats* stats)
     vpn->m->updateStats(stats, dtls);
 }
 
-static void progress_vfn(void* privdata, int level, const char* fmt, ...)
+static void progress_vfn(void* /* privdata */, int level, const char* fmt, ...)
 {
-    VpnInfo* vpn = static_cast<VpnInfo*>(privdata);
     char buf[512];
     size_t len;
     va_list args;
@@ -257,7 +256,7 @@ fail:
     return OC_FORM_RESULT_CANCELLED;
 }
 
-static int validate_peer_cert(void* privdata, const char* reason)
+static int validate_peer_cert(void* privdata, const char* /* reason */)
 {
     VpnInfo* vpn = static_cast<VpnInfo*>(privdata);
     unsigned char* der = nullptr;

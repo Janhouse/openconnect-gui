@@ -57,9 +57,9 @@ static int token_tab(int mode)
 }
 
 static int token_rtab[] = {
-    [0] = OC_TOKEN_MODE_HOTP,
-    [1] = OC_TOKEN_MODE_TOTP,
-    [2] = OC_TOKEN_MODE_STOKEN
+    OC_TOKEN_MODE_HOTP,
+    OC_TOKEN_MODE_TOTP,
+    OC_TOKEN_MODE_STOKEN
 };
 
 void EditDialog::load_win_certs()

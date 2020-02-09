@@ -129,12 +129,12 @@ bool CryptData::decode(QString& txt, QByteArray _enc, QString& res)
 
 #else
 
-QByteArray CryptData::encode(QString& txt, QString password)
+QByteArray CryptData::encode(QString& /* txt */, QString password)
 {
     return password.toUtf8();
 }
 
-bool CryptData::decode(QString& txt, QByteArray _enc, QString& res)
+bool CryptData::decode(QString& /* txt */, QByteArray _enc, QString& res)
 {
     res = QString::fromUtf8(_enc);
     return true;

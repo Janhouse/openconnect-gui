@@ -48,7 +48,7 @@ extern "C" {
 #include <csignal>
 #include <cstdio>
 
-static void log_callback(int level, const char* str)
+static void log_callback(int /* level */, const char* str)
 {
     Logger::instance().addMessage(QString(str).trimmed(),
         Logger::MessageType::DEBUG,
@@ -60,6 +60,7 @@ bool relaunch_as_root()
 {
     QMessageBox msgBox;
     char appPath[2048];
+    char *args = nullptr;
     uint32_t size = sizeof(appPath);
     AuthorizationRef authRef;
     OSStatus status;
@@ -78,7 +79,7 @@ bool relaunch_as_root()
         return false;
     }
     status = AuthorizationExecuteWithPrivileges(authRef, appPath,
-        kAuthorizationFlagDefaults, NULL, NULL);
+        kAuthorizationFlagDefaults, &args, NULL);
     AuthorizationFree(authRef, kAuthorizationFlagDestroyRights);
 
     if (status == errAuthorizationSuccess) {
@@ -90,7 +91,7 @@ bool relaunch_as_root()
 }
 #endif
 
-int pin_callback(void* userdata, int attempt, const char* token_url,
+int pin_callback(void* userdata, int /* attempt */, const char* token_url,
     const char* token_label, unsigned flags, char* pin,
     size_t pin_max)
 {
@@ -208,7 +209,7 @@ int main(int argc, char* argv[])
 
     mainWindow.show();
     QObject::connect(&app, &QtSingleApplication::messageReceived,
-        [&mainWindow](const QString& message) {
+        [](const QString& message) {
             Logger::instance().addMessage(message);
         });
     return app.exec();

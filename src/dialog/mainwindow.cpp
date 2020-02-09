@@ -702,8 +702,8 @@ void MainWindow::on_connectClicked()
                     str += ":" + QString::number(proxies.at(0).port());
                 }
                 Logger::instance().addMessage(tr("Setting proxy to: ") + str);
-                // FIXME: ...
-                int ret = openconnect_set_http_proxy(vpninfo->vpninfo, str.toLatin1().data());
+                // FIXME: check return value
+                openconnect_set_http_proxy(vpninfo->vpninfo, str.toLatin1().data());
             }
         }
     }

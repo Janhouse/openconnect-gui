@@ -28,9 +28,9 @@ extern "C" {
 #define MAX_HASH_LEN 64
 
 static int store_cb(const char* db_name,
-    const char* host,
-    const char* service,
-    time_t expiration,
+    const char* /* host */,
+    const char* /* service */,
+    time_t /* expiration */,
     const gnutls_datum_t* pubkey)
 {
     char output[MAX_HASH_LEN];
@@ -48,8 +48,8 @@ static int store_cb(const char* db_name,
 }
 
 static int verify_cb(const char* db_name,
-    const char* host,
-    const char* service,
+    const char* /* host */,
+    const char* /* service */,
     const gnutls_datum_t* pubkey)
 {
     const gtdb* tdb = reinterpret_cast<const gtdb*>(db_name);
