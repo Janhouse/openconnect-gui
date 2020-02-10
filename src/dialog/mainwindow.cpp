@@ -228,7 +228,7 @@ MainWindow::MainWindow(QWidget* parent, const QString profileName)
     connect(s112_minimizedWindow, &QState::entered, [this]() {
         showMinimized();
         if (ui->actionMinimizeToTheNotificationArea->isChecked()) {
-            QTimer::singleShot(10, this, SLOT(hide()));
+            QTimer::singleShot(0, this, SLOT(hide()));
         }
     });
     connect(s112_minimizedWindow, &QState::exited, [this]() {
@@ -266,7 +266,7 @@ MainWindow::MainWindow(QWidget* parent, const QString profileName)
             }
             QStateMachine::WrappedEvent* we = static_cast<QStateMachine::WrappedEvent*>(e);
             if (we->event()->type() == QEvent::WindowStateChange) {
-                return (m_mw->windowState() == m_state);
+                return m_mw->windowState() & m_state;
             }
             return false;
         }
@@ -293,7 +293,7 @@ MainWindow::MainWindow(QWidget* parent, const QString profileName)
             }
             QStateMachine::WrappedEvent* we = static_cast<QStateMachine::WrappedEvent*>(e);
             if (we->event()->type() == QEvent::WindowStateChange) {
-                return (m_mw->windowState() == m_state);
+                return m_mw->windowState() & ~m_state;
             }
             return false;
         }
@@ -307,7 +307,7 @@ MainWindow::MainWindow(QWidget* parent, const QString profileName)
     minimizeEvent->setTargetState(s112_minimizedWindow);
     s111_normalWindow->addTransition(minimizeEvent);
 
-    RestoreEventTransition* restoreEvent = new RestoreEventTransition(this, Qt::WindowNoState);
+    RestoreEventTransition* restoreEvent = new RestoreEventTransition(this, Qt::WindowMinimized);
     restoreEvent->setTargetState(s111_normalWindow);
     s112_minimizedWindow->addTransition(restoreEvent);
 
@@ -726,7 +726,12 @@ fail: // LCA: remote 'fail' label :/
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     if (m_trayIcon && m_trayIcon->isVisible() && ui->actionMinimizeTheApplicationInsteadOfClosing->isChecked()) {
+#ifdef Q_OS_OSX
+	ui->actionMinimize->setEnabled(false);
+	ui->actionRestore->setEnabled(true);
+#else
         this->showMinimized();
+#endif
         event->ignore();
     } else {
         event->accept();

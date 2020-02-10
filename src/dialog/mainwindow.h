@@ -131,7 +131,4 @@ private:
     QMenu* m_trayIconMenu;
     QMenu* m_trayIconMenuConnections;
     QAction* m_disconnectAction;
-    QAction* m_minimizeAction;
-    QAction* m_restoreAction;
-    QAction* m_quitAction;
 };
