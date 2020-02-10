@@ -315,6 +315,17 @@ MainWindow::MainWindow(QWidget* parent, const QString profileName)
 }
 
 #ifdef Q_OS_OSX
+void MainWindow::showMinimized()
+{
+    if (ui->actionMinimizeToTheNotificationArea->isChecked()) {
+        ui->actionMinimize->setEnabled(false);
+        ui->actionRestore->setEnabled(true);
+        hide();
+    } else {
+        QMainWindow::showMinimized();
+    }
+}
+
 void MainWindow::showNormal()
 {
     ui->actionMinimize->setEnabled(true);

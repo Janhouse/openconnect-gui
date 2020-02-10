@@ -77,6 +77,7 @@ public slots:
     void changeStatus(int);
 
 #ifdef Q_OS_OSX
+    void showMinimized();
     void showNormal();
 #endif
 
