@@ -76,6 +76,10 @@ public slots:
     void statsChanged(QString, QString, QString);
     void changeStatus(int);
 
+#ifdef Q_OS_OSX
+    void showNormal();
+#endif
+
     void blink_ui(void);
 
     void request_update_stats();

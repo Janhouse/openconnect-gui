@@ -314,6 +314,17 @@ MainWindow::MainWindow(QWidget* parent, const QString profileName)
     m_appWindowStateMachine->start();
 }
 
+#ifdef Q_OS_OSX
+void MainWindow::showNormal()
+{
+    ui->actionMinimize->setEnabled(true);
+    ui->actionRestore->setEnabled(false);
+    QMainWindow::showNormal();
+    raise();
+    activateWindow();
+}
+#endif
+
 static void term_thread(MainWindow* m, SOCKET* fd)
 {
     char cmd = OC_CMD_CANCEL;
@@ -464,6 +475,10 @@ void MainWindow::changeStatus(int val)
         if (this->minimize_on_connect) {
             if (m_trayIcon) {
                 hide();
+#ifdef Q_OS_OSX
+                ui->actionMinimize->setEnabled(false);
+                ui->actionRestore->setEnabled(true);
+#endif
                 m_trayIcon->showMessage(QLatin1String("Connected"), QLatin1String("You were connected to ") + ui->serverList->currentText(),
                     QSystemTrayIcon::Information,
                     10000);
