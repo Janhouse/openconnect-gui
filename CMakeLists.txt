@@ -7,7 +7,7 @@ if(APPLE)
 endif()
 
 project(OpenConnect-GUI
-    VERSION 1.5.3
+    VERSION 1.5.5
     LANGUAGES CXX
 )
 
