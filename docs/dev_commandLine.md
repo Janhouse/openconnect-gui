@@ -26,6 +26,6 @@ cd openconnect-gui
 # Build it
 mkdir build-release
 cd build-release
-Qt5_DIR=/usr/local/opt/qt5/lib/cmake/Qt5 cmake -DCMAKE_BUILD_TYPE=Release ..
+Qt5_DIR=/usr/local/opt/qt5/lib/cmake/Qt5 PKG_CONFIG_PATH='/usr/local/opt/zlib/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig' cmake -DCMAKE_BUILD_TYPE=Release ..
 make
 ```
